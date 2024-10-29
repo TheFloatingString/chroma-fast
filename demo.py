@@ -49,6 +49,7 @@ def add_docs(coll):
     reviews_to_add = list()
     review_ids_to_add = list()
 
+    counter = 0
     for i in range(len(restaurant_data_raw["places"])):
         RESTAURANT_ID = restaurant_data_raw["places"][i]["id"]
         for j in range(len(restaurant_data_raw["places"][i]["reviews"])):
@@ -57,6 +58,10 @@ def add_docs(coll):
 
             reviews_to_add.append(review)
             review_ids_to_add.append(review_id)
+            counter += 1
+
+    if VERBOSE:
+        print(f"counter: {counter}")
 
     resp = coll.add(
         documents=reviews_to_add,
@@ -96,7 +101,9 @@ def main():
         restaurant_id = initial_id
         for i in range(len(restaurant_data_raw["places"])):
             if restaurant_data_raw["places"][i]["id"] == restaurant_id:
-                print(restaurant_data_raw["places"][i]["websiteUri"])
+                print(
+                    f'{restaurant_data_raw["places"][i]["displayName"]["text"]} ({restaurant_data_raw["places"][i]["shortFormattedAddress"]})\t\t{restaurant_data_raw["places"][i]["websiteUri"]}'
+                )
     end = time.time()
     print("---------------")
     print(f"Elapsed: {round(end-start, 8)} seconds")

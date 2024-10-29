@@ -11,8 +11,9 @@ VERBOSE = True
 ONE_TO_ONE_FILEPATH = "cfg/one_to_one.json"
 
 
-def main(N=100):
+def main():
     openai_client = OpenAI(api_key=os.getenv("DEMO_OPENAI_API_KEY"))
+    N = input("Embedding size? (10 to 1,000) ")
     query_term = input("What are you looking for? ")
     chat_completion = openai_client.chat.completions.create(
         messages=[
